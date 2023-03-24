@@ -19,9 +19,9 @@ class MinerConfig(dict):
         K: Top-K predictions to mine
         indexes: Instances to mine, by index
     """
-    def __init__(self, template_column: str= "template", subject_template: str= "[X]",
+    def __init__(self, template_column: str="template", subject_template: str="[X]",
                  subject_value: str="sub_surface", object_template: str="[Y]",
-                 mask_template: str="<mask>", fillin_column: str= "obj_surface",
+                 original_mask: str="[MASK]", mask_template: str="<mask>", fillin_column: str= "obj_surface",
                  triples: bool = False,
                  K: int = 10, indexes: Optional[numpy.ndarray] = None):
         """
@@ -38,15 +38,16 @@ class MinerConfig(dict):
             indexes: Only mine the dataset on these indexes, `None` to mine on all. Defaults to None
         """
         super().__init__()
-        self.template_column = template_column
-        self.subject_template = subject_template
-        self.subject_value = subject_value
-        self.object_template = object_template
-        self.mask_template = mask_template
-        self.fillin_template = fillin_column
-        self.triples = triples
-        self.K = K
-        self.indexes = indexes
+        self["template_column"] = template_column
+        self["subject_template"] = subject_template
+        self["subject_value"] = subject_value
+        self["object_template"] = object_template
+        self["mask_template"] = mask_template
+        self["original_mask"] = original_mask
+        self["fillin_value"] = fillin_column
+        self["triples"] = triples
+        self["K"] = K
+        self["indexes"] = indexes
 
 
 class Miner:
@@ -63,12 +64,37 @@ class Miner:
         predictions = list()
         with open(predictions_file, 'r') as log:
             for instance in log:
-                instance_dict = json.loads(instance)
-                ground_truths.append(instance_dict["ground_truth_prediction"])
-                predictions.append(instance_dict["prediction"])
+                ground_truths.append(instance[3])
+                predictions.append(instance[4])
 
         return ground_truths, predictions
 
+    @staticmethod
+    def load_mining_results(predictions_file: str) -> List[Dict]:
+        results = list()
+        with open(predictions_file, 'r') as log:
+            for instance in log:
+                try:
+                    index, uuid, input, predictions, ground_truth = json.loads(instance)
+                    results.append({
+                        "index": index,
+                        "uuid": uuid,
+                        "input_query": input,
+                        "predictions": predictions,
+                        "ground_truth": ground_truth
+                    })
+                except ValueError:
+                    index, uuid, input, predictions, ground_truth, documents = json.loads(instance)
+                    results.append({
+                        "index": index,
+                        "uuid": uuid,
+                        "documents": documents,
+                        "input_query": input,
+                        "predictions": predictions,
+                        "ground_truth": ground_truth
+                    })
+
+        return results
 
 ### Stock configurations
 ## LAMA
@@ -81,6 +107,41 @@ LAMA_BAERT_MINER = MinerConfig(
 )
 
 LAMA_BAERT_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="<mask>",
+    fillin_column="obj_surface",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+LAMA_DEBERTA_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+LAMA_DEBERTA_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="[MASK]",
+    fillin_column="obj_surface",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+# RAG
+LAMA_RAG_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="<mask>",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+LAMA_RAG_TRIPLES_MINER = MinerConfig(
     template_column="template",
     mask_template="<mask>",
     fillin_column="obj_surface",
@@ -106,4 +167,195 @@ LAMA_T5_TRIPLES_MINER = MinerConfig(
     subject_value="sub_surface",
     object_template="[Y]",
     triples=True
+)
+
+# Baert
+SQUAD_BAERT_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="<mask>",
+    fillin_column="obj_label",
+    triples=False
+)
+
+SQUAD_BAERT_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="<mask>",
+    fillin_column="obj_label",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+SQUAD_DEBERTA_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="[MASK]",
+    fillin_column="obj_label",
+    triples=False
+)
+
+SQUAD_DEBERTA_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="[MASK]",
+    fillin_column="obj_label",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+# RAG
+SQUAD_RAG_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="<mask>",
+    fillin_column="obj_label",
+    triples=False
+)
+
+SQUAD_RAG_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="<mask>",
+    fillin_column="obj_label",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+# T5
+SQUAD_T5_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="<extra_id_0>",
+    fillin_column="obj_label",
+    triples=False
+)
+
+SQUAD_T5_TRIPLES_MINER = MinerConfig(
+    template_column="template",
+    mask_template="<extra_id_0>",
+    fillin_column="obj_label",
+    subject_template="[X]",
+    subject_value="sub_surface",
+    object_template="[Y]",
+    triples=True
+)
+
+## HONEST
+# Baert
+HONEST_BAERT_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
+HONEST_DEBERTA_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="[MASK]",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
+# T5
+HONEST_T5_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<extra_id_0>",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
+# RAG
+HONEST_RAG_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
+# Realm
+HONEST_REALM_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
+## Stereoset
+STEREOSET_BAERT_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+STEREOSET_DEBERTA_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="[MASK]",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+STEREOSET_T5_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<extra_id_0>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+STEREOSET_RAG_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+
+## Crows
+CROWS_BAERT_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+CROWS_DEBERTA_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="[MASK]",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+CROWS_RAG_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+CROWS_REALM_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
+)
+
+CROWS_T5_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<extra_id_0>",
+    original_mask="[MASK]",
+    fillin_column="obj_surface",
+    triples=False
 )

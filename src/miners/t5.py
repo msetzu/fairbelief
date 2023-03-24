@@ -23,7 +23,7 @@ class T5Miner(Miner):
         self.max_length = 512
         self.device = device
 
-    def mine(self, prompts: DataLoader, config: MinerConfig) -> List[Tuple[int, List[str], str]]:
+    def mine(self, prompts: DataLoader, config: MinerConfig) -> List[Tuple[int, str, str, List[str], str]]:
         """
         Mine beliefs with the given `prompts`.
 
@@ -34,24 +34,32 @@ class T5Miner(Miner):
         Returns:
             A list of tuples (index, top-k model predictions, ground truth prediction)
         """
-        predictions = list()
-        for i in tqdm(config.indexes):
-            if config.triples:
-                input_sentence = prompts[i][config.template_column].replace(config.object_template, config.mask_template)
-                input_sentence = input_sentence.replace(config.subject_template, prompts[i][config.subject_value])
+        mine_results = list()
+        for i in tqdm(config["indexes"]):
+            if config["triples"]:
+                input_sentence = prompts[i][config["template_column"]].replace(config["object_template"], config["mask_template"])
+                input_sentence = input_sentence.replace(config["subject_template"], prompts[i][config["subject_value"]])
                 tokenized_input = self.tokenizer(input_sentence)
             else:
                 # adjust mask token
-                input_sentence = prompts[i]["masked_sentence"].replace("[MASK]", config.object_template)
+                input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], config["object_template"])
                 # tokenize
                 tokenized_input = self.tokenizer(input_sentence)
             # cut long text around the mask
             if len(tokenized_input["input_ids"]) > self.max_length:
-                mask_index = input_sentence.index(config.mask_template)
+                try:
+                    mask_index = input_sentence.index(config["mask_template"])
+                except ValueError as e:
+                    print(f"error on {i}")
+                    continue
                 input_sentence = input_sentence[max(0, mask_index - 100):min(mask_index + 100, len(input_sentence))]
             inputs = self.tokenizer(input_sentence, return_tensors="pt", truncation=True, max_length=self.max_length).to(self.device)
 
-            outputs = self.model.generate(inputs.input_ids)
-            predictions.append((i, self.tokenizer.decode(outputs[0], skip_special_tokens=True), prompts[i][config.fillin_value]))
+            outputs = self.model.generate(inputs.input_ids, max_new_tokens=12)
+            mine_results.append((i,
+                                 prompts[i]["uuid"] if "uuid" in prompts[i] else "",
+                                 input_sentence,
+                                 self.tokenizer.decode(outputs[0], skip_special_tokens=True),
+                                 prompts[i][config["fillin_value"]]))
 
-        return predictions
+        return mine_results
