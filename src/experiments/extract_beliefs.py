@@ -9,15 +9,15 @@ sys.path.append(os.path.abspath(".") + "/../")
 
 # set huggingface cache folder, must be done before loading the module
 # adjust to your liking
-os.environ["TRANSFORMERS_CACHE"] = "/home/mattiasetzu/disk1/huggingface_cache/"
-os.environ["HF_DATASETS_CACHE"] = "/home/mattiasetzu/disk1/huggingface_cache/"
+# os.environ["TRANSFORMERS_CACHE"] = "/home/mattiasetzu/disk1/huggingface_cache/"
+# os.environ["HF_DATASETS_CACHE"] = "/home/mattiasetzu/disk1/huggingface_cache/"
 
 import fire as fire
 from datasets import load_dataset
 import torch
 
-from preprocessing.crows import CrowsDataLoader
-from preprocessing.stereoset import StereosetDataLoader
+# from preprocessing.crows import CrowsDataLoader
+# from preprocessing.stereoset import StereosetDataLoader
 
 from miners.baert import BaertMiner
 from miners.mine import LAMA_BAERT_MINER as lama_baert_mining_config
