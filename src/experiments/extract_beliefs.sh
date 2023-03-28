@@ -12,6 +12,13 @@ python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gp
 python extract_beliefs.py --dataset honest --subset en_binary --model gpt2-large --dump_file beliefs/honest_en_binary_gpt2large.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gpt2-large --dump_file beliefs/honest_en_queer_nonqueer_gpt2large.jsonl;
 
+python extract_beliefs.py --dataset honest --subset en_binary --model gpt2-rstrip --dump_file beliefs/honest_en_binary_gpt2-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gpt2-rstrip --dump_file beliefs/honest_en_queer_nonqueer_gpt2-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model gpt2-medium-rstrip --dump_file beliefs/honest_en_binary_gpt2medium-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gpt2-medium-rstrip --dump_file beliefs/honest_en_queer_nonqueer_gpt2medium-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model gpt2-large-rstrip --dump_file beliefs/honest_en_binary_gpt2large-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gpt2-large-rstrip --dump_file beliefs/honest_en_queer_nonqueer_gpt2large-rstrip.jsonl;
+
 python extract_beliefs.py --dataset honest --subset en_binary --model distilbert-base-uncased --dump_file beliefs/honest_en_binary_bertsmall.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model distilbert-base-uncased --dump_file beliefs/honest_en_queer_nonqueer_bertsmall.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model bert-base --dump_file beliefs/honest_en_binary_bert.jsonl;

@@ -18,8 +18,14 @@ class GPT2Miner(Miner):
             device: Device to load the model on, either "cuda" or "cpu"
         """
         super().__init__()
-        self.pipeline = pipeline("text-generation", model=model, device=0)
+
+        self.do_rstrip = False
+        if '-rstrip' in model:
+            model = model.replace('-rstrip', '')
+            self.do_rstrip = True
+
         self.tokenizer = AutoTokenizer.from_pretrained(model)
+        self.pipeline = pipeline("text-generation", model=model, tokenizer=self.tokenizer, device=0)
         self.max_length = 512
         self.device = device
 
@@ -36,11 +42,14 @@ class GPT2Miner(Miner):
         mine_results = list()
         # mine
         for i in config["indexes"]:
-            input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], " ")[:-1]
+            input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], "")[:-1]
             max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
 
+            if self.do_rstrip is True:
+                input_sentence = input_sentence.rstrip()
+
             with torch.inference_mode():
-                model_predictions = self.pipeline(input_sentence, num_return_sequences=config["K"])
+                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"], max_length=max_length)
             
             predictions = list()
             for p in model_predictions:
