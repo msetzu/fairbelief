@@ -19,7 +19,7 @@ class BLOOMMiner(Miner):
         """
         super().__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(model)
-        self.pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0)
+        self.pipeline = pipeline("text-generation", model=model, tokenizer=self.tokenizer, device=0)
         self.max_length = 512
         self.device = device
 
