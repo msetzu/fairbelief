@@ -9,7 +9,7 @@ from miners.mine import Miner, MinerConfig
 
 class BLOOMMiner(Miner):
     """
-    Miner for GPT2 models..
+    Miner for BLOOM models..
     """
     def __init__(self, model: str = "bigscience/bloom-560m", family: str = "bloom", device: str = "cuda"):
         """
