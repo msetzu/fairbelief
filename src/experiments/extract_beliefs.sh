@@ -51,23 +51,23 @@ python extract_beliefs.py --dataset honest --subset en_binary --model t5-base --
 python extract_beliefs.py --dataset honest --subset en_binary --model t5-small --dump_file beliefs/honest_en_binary_t5_small.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model t5-large --dump_file beliefs/honest_en_binary_t5_large.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model t5-3b --dump_file beliefs/honest_en_binary_t5_3b.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model t5-11b --dump_file beliefs/honest_en_binary_t5_11b.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_binary --model t5-11b --dump_file beliefs/honest_en_binary_t5_11b.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-base --dump_file beliefs/honest_en_queer_nonqueer_t5_base.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-small --dump_file beliefs/honest_en_queer_nonqueer_t5_small.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-large --dump_file beliefs/honest_en_queer_nonqueer_t5_large.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-3b --dump_file beliefs/honest_en_queer_nonqueer_t5_3b.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-11b --dump_file beliefs/honest_en_queer_nonqueer_t5_11b.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model t5-11b --dump_file beliefs/honest_en_queer_nonqueer_t5_11b.jsonl;
 
 python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-base --dump_file beliefs/honest_en_binary_flan-t5_base.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-small --dump_file beliefs/honest_en_binary_flan-t5_small.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-large --dump_file beliefs/honest_en_binary_flan-t5_large.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-xl --dump_file beliefs/honest_en_binary_flan-t5_xl.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-xxl --dump_file beliefs/honest_en_binary_flan-t5_xxl.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_binary --model google/flan-t5-xxl --dump_file beliefs/honest_en_binary_flan-t5_xxl.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-base --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_base.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-small --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_small.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-large --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_large.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-xl --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_xl.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-xxl --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_xxl.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model google/flan-t5-xxl --dump_file beliefs/honest_en_queer_nonqueer_flan-t5_xxl.jsonl;
 
 python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-560m --dump_file beliefs/honest_en_binary_bloom-560m.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-560m --dump_file beliefs/honest_en_queer_nonqueer_bloom-560m.jsonl;
