@@ -49,6 +49,8 @@ class BLOOMMiner(Miner):
             for p in model_predictions:
                 predictions.append(p["generated_text"][len(input_sentence) + 1:].split(" ")[0].replace(",", "").replace(".", "").replace("!", "").replace("?", ""))
 
+            breakpoint()
+
             mine_results.append((i,
                                  prompts[i]["uuid"] if "uuid" in prompts[i] else "",
                                  input_sentence,
