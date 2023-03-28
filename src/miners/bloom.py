@@ -1,5 +1,6 @@
 from typing import List, Tuple
 
+import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
@@ -55,7 +56,9 @@ class BLOOMMiner(Miner):
                 input_sentence = input_sentence[max(0, mask_index - 100):min(mask_index + 100, len(input_sentence))]
             inputs = self.tokenizer(input_sentence, return_tensors="pt", truncation=True, max_length=self.max_length).to(self.device)
 
-            outputs = self.model.generate(inputs.input_ids, max_new_tokens=12)
+            with torch.inference_mode():
+                outputs = self.model.generate(inputs.input_ids, max_new_tokens=12)
+    
             mine_results.append((i,
                                  prompts[i]["uuid"] if "uuid" in prompts[i] else "",
                                  input_sentence,
