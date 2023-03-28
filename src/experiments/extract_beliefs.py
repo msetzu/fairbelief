@@ -66,6 +66,8 @@ def extract(dataset: str, model: str = "roberta-base", subset: Optional[str] = "
     if os.path.exists(dump_file):
         raise ValueError(f"File exists: {dump_file}")
 
+    print(f'Starting experiment with {model} on {dataset}')
+
     if dataset == "lama":
         extract_lama(model, subset, dump_file)
     elif dataset == "squad":
