@@ -36,14 +36,14 @@ class BLOOMMiner(Miner):
         mine_results = list()
         # mine
         for i in config["indexes"]:
-            breakpoint()
+            # breakpoint()
             # config["template_column"] is 'maked_sentence'
             # config["original_mask"] is '[MASK]'
             input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], " ")[:-1]
             max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
 
             with torch.inference_mode():
-                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"])
+                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"], max_length=max_length)
             
             predictions = list()
             for p in model_predictions:
