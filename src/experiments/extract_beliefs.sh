@@ -21,10 +21,10 @@ python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model gp
 
 python extract_beliefs.py --dataset honest --subset en_binary --model distilbert-base-uncased --dump_file beliefs/honest_en_binary_bertsmall.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model distilbert-base-uncased --dump_file beliefs/honest_en_queer_nonqueer_bertsmall.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model bert-base --dump_file beliefs/honest_en_binary_bert.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bert-base --dump_file beliefs/honest_en_queer_nonqueer_bert.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model bert-large --dump_file beliefs/honest_en_binary_bertlarge.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bert-large --dump_file beliefs/honest_en_queer_nonqueer_bertlarge.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model bert-base-uncased --dump_file beliefs/honest_en_binary_bert-base-uncased.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bert-base-uncased --dump_file beliefs/honest_en_queer_nonqueer_bert-base-uncased.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model bert-large-uncased --dump_file beliefs/honest_en_binary_bert-large-uncased.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bert-large-uncased --dump_file beliefs/honest_en_queer_nonqueer_bert-large-uncased.jsonl;
 
 python extract_beliefs.py --dataset honest --subset en_binary --model albert-base-v2 --dump_file beliefs/honest_en_binary_albert.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model albert-base-v2 --dump_file beliefs/honest_en_queer_nonqueer_albert.jsonl;
