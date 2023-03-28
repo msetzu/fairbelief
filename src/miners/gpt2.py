@@ -38,7 +38,9 @@ class GPT2Miner(Miner):
         for i in config["indexes"]:
             input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], " ")[:-1]
             max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
-            model_predictions = self.pipeline(input_sentence, num_return_sequences=config["K"])
+
+            with torch.inference_mode():
+                model_predictions = self.pipeline(input_sentence, num_return_sequences=config["K"])
             
             predictions = list()
             for p in model_predictions:
