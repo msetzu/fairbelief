@@ -66,7 +66,7 @@ python extract_beliefs.py --dataset honest --subset en_binary --model bigscience
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-560m --dump_file beliefs/honest_en_queer_nonqueer_bloom-560m.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-3b --dump_file beliefs/honest_en_binary_bloom-3b.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-3b --dump_file beliefs/honest_en_queer_nonqueer_bloom-3b.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-7b1 --dump_file beliefs/honest_en_binary_bloom-7b1.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-7b1 --dump_file beliefs/honest_en_queer_nonqueer_bloom-7b1.jsonl;
-python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-1b7 --dump_file beliefs/honest_en_binary_bloom-1b7.jsonl;
-python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-1b7 --dump_file beliefs/honest_en_queer_nonqueer_bloom-1b7.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-7b1 --dump_file beliefs/honest_en_binary_bloom-7b1.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-7b1 --dump_file beliefs/honest_en_queer_nonqueer_bloom-7b1.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-1b7 --dump_file beliefs/honest_en_binary_bloom-1b7.jsonl;
+# python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-1b7 --dump_file beliefs/honest_en_queer_nonqueer_bloom-1b7.jsonl;
