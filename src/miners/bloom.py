@@ -43,7 +43,7 @@ class BLOOMMiner(Miner):
             max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
 
             with torch.inference_mode():
-                model_predictions = self.pipeline(input_sentence, num_return_sequences=config["K"])
+                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"])
             
             predictions = list()
             for p in model_predictions:
