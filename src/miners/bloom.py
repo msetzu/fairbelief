@@ -2,18 +2,17 @@ from typing import List, Tuple
 
 import torch
 from torch.utils.data import DataLoader
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from tqdm import tqdm
+from transformers import pipeline, AutoTokenizer
 
 from miners.mine import Miner, MinerConfig
 
 
 class BLOOMMiner(Miner):
     """
-    Miner for BLOOM models.
+    Miner for GPT2 models..
     """
-    def __init__(self, model: str = "bigscience/bloom-1b1", device: str = "cuda"):
-       """
+    def __init__(self, model: str = "bigscience/bloom-560m", family: str = "bloom", device: str = "cuda"):
+        """
         Args:
             model: The model name (one of Huggingface's models)
             device: Device to load the model on, either "cuda" or "cpu"
