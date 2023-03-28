@@ -159,6 +159,13 @@ LAMA_T5_MINER = MinerConfig(
     triples=False
 )
 
+LAMA_BLOOM_MINER = MinerConfig(
+    template_column="masked_sentence",
+    mask_template="<extra_id_0>",
+    fillin_column="obj_surface",
+    triples=False
+)
+
 LAMA_T5_TRIPLES_MINER = MinerConfig(
     template_column="template",
     mask_template="<extra_id_0>",

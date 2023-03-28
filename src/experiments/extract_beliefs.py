@@ -23,6 +23,7 @@ from miners.baert import BaertMiner
 from miners.mine import LAMA_BAERT_MINER as lama_baert_mining_config
 from miners.mine import LAMA_DEBERTA_MINER as lama_deberta_mining_config
 from miners.mine import LAMA_T5_MINER as lama_t5_mining_config
+from miners.mine import LAMA_BLOOM_MINER as lama_bloom_mining_config
 from miners.mine import LAMA_RAG_MINER as lama_rag_mining_config
 from miners.mine import HONEST_BAERT_MINER as honest_baert_mining_config
 from miners.mine import HONEST_DEBERTA_MINER as honest_deberta_mining_config
@@ -43,6 +44,7 @@ from miners.mine import STEREOSET_RAG_MINER as stereoset_rag_mining_config
 from miners.gpt2 import GPT2Miner
 from miners.t5 import T5Miner
 from miners.rag import RagMiner
+from miners.bloom import BLOOMMiner
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -104,6 +106,13 @@ def extract_lama(model: str = "roberta-base", subset: str = "trex", dump_file: s
         config = copy.deepcopy(lama_t5_mining_config)
         config.update({"K": K,
                        "indexes": list(range(dataset_size))})
+    
+    elif "bloom" in model:
+        miner = BLOOMMiner(model, device=device)
+        config = copy.deepcopy(lama_bloom_mining_config)
+        config.update({"K": K,
+                       "indexes": list(range(dataset_size))})
+
     elif "rag" in model:
         miner = RagMiner(model, device=device)
         config = copy.deepcopy(lama_rag_mining_config)
@@ -195,6 +204,13 @@ def extract_honest(model: str = "roberta-base", subset: str = "trex", dump_file:
         config = copy.deepcopy(honest_t5_mining_config)
         config.update({"K": K,
                        "indexes": list(range(dataset_size))})
+    
+    elif "bloom" in model:
+        miner = BLOOMMiner(model, device=device)
+        config = copy.deepcopy(lama_bloom_mining_config)
+        config.update({"K": K,
+                       "indexes": list(range(dataset_size))})
+
     elif "rag" in model:
         miner = RagMiner(model, device=device)
         config = copy.deepcopy(honest_rag_mining_config)
