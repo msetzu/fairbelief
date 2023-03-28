@@ -18,7 +18,7 @@ class GPT2Miner(Miner):
             device: Device to load the model on, either "cuda" or "cpu"
         """
         super().__init__()
-        self.pipeline = pipeline("text-generation", model=model)
+        self.pipeline = pipeline("text-generation", model=model, device=device)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.max_length = 512
         self.device = device
