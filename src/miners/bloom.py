@@ -18,8 +18,8 @@ class BLOOMMiner(Miner):
             device: Device to load the model on, either "cuda" or "cpu"
         """
         super().__init__()
-        self.pipeline = pipeline("text-generation", model=model, device=0)
         self.tokenizer = AutoTokenizer.from_pretrained(model)
+        self.pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0)
         self.max_length = 512
         self.device = device
 
