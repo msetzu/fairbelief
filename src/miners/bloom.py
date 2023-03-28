@@ -37,6 +37,8 @@ class BLOOMMiner(Miner):
         # mine
         for i in config["indexes"]:
             breakpoint()
+            # config["template_column"] is 'maked_sentence'
+            # config["original_mask"] is '[MASK]'
             input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], " ")[:-1]
             max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
 
