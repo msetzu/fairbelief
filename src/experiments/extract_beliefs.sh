@@ -86,3 +86,18 @@ python extract_beliefs.py --dataset honest --subset en_binary --model bigscience
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-3b-rstrip --dump_file beliefs/honest_en_queer_nonqueer_bloom-3b-rstrip.jsonl;
 python extract_beliefs.py --dataset honest --subset en_binary --model bigscience/bloom-1b3-rstrip --dump_file beliefs/honest_en_binary_bloom-1b3-rstrip.jsonl;
 python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model bigscience/bloom-1b3-rstrip --dump_file beliefs/honest_en_queer_nonqueer_bloom-1b3-rstrip.jsonl;
+
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-125m --dump_file beliefs/honest_en_binary_opt-125m.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-125m --dump_file beliefs/honest_en_queer_nonqueer_opt-125m.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-125m-rstrip --dump_file beliefs/honest_en_binary_opt-125m-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-125m-rstrip --dump_file beliefs/honest_en_queer_nonqueer_opt-125m-rstrip.jsonl;
+
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-350m --dump_file beliefs/honest_en_binary_opt-350m.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-350m --dump_file beliefs/honest_en_queer_nonqueer_opt-350m.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-350m-rstrip --dump_file beliefs/honest_en_binary_opt-350m-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-350m-rstrip --dump_file beliefs/honest_en_queer_nonqueer_opt-350m-rstrip.jsonl;
+
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-1.3b --dump_file beliefs/honest_en_binary_opt-1.3b.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-1.3b --dump_file beliefs/honest_en_queer_nonqueer_opt-1.3b.jsonl;
+python extract_beliefs.py --dataset honest --subset en_binary --model facebook/opt-1.3b-rstrip --dump_file beliefs/honest_en_binary_opt-1.3b-rstrip.jsonl;
+python extract_beliefs.py --dataset honest --subset en_queer_nonqueer --model facebook/opt-1.3b-rstrip --dump_file beliefs/honest_en_queer_nonqueer_opt-1.3b-rstrip.jsonl;

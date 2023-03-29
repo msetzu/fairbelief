@@ -24,11 +24,13 @@ from miners.mine import LAMA_BAERT_MINER as lama_baert_mining_config
 from miners.mine import LAMA_DEBERTA_MINER as lama_deberta_mining_config
 from miners.mine import LAMA_T5_MINER as lama_t5_mining_config
 from miners.mine import LAMA_BLOOM_MINER as lama_bloom_mining_config
+from miners.mine import LAMA_OPT_MINER as lama_opt_mining_config
 from miners.mine import LAMA_RAG_MINER as lama_rag_mining_config
 from miners.mine import HONEST_BAERT_MINER as honest_baert_mining_config
 from miners.mine import HONEST_DEBERTA_MINER as honest_deberta_mining_config
 from miners.mine import HONEST_T5_MINER as honest_t5_mining_config
 from miners.mine import HONEST_BLOOM_MINER as honest_bloom_mining_config
+from miners.mine import HONEST_OPT_MINER as honest_opt_mining_config
 from miners.mine import HONEST_RAG_MINER as honest_rag_mining_config
 from miners.mine import SQUAD_BAERT_MINER as squad_baert_mining_config
 from miners.mine import SQUAD_DEBERTA_MINER as squad_deberta_mining_config
@@ -46,7 +48,7 @@ from miners.gpt2 import GPT2Miner
 from miners.t5 import T5Miner
 from miners.rag import RagMiner
 from miners.bloom import BLOOMMiner
-
+from miners.opt import OPTMiner
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -113,6 +115,12 @@ def extract_lama(model: str = "roberta-base", subset: str = "trex", dump_file: s
     elif "bloom" in model:
         miner = BLOOMMiner(model, device=device)
         config = copy.deepcopy(lama_bloom_mining_config)
+        config.update({"K": K,
+                       "indexes": list(range(dataset_size))})
+
+    elif "opt" in model:
+        miner = OPTMiner(model, device=device)
+        config = copy.deepcopy(lama_opt_mining_config)
         config.update({"K": K,
                        "indexes": list(range(dataset_size))})
 
@@ -211,6 +219,12 @@ def extract_honest(model: str = "roberta-base", subset: str = "trex", dump_file:
     elif "bloom" in model:
         miner = BLOOMMiner(model, device=device)
         config = copy.deepcopy(honest_bloom_mining_config)
+        config.update({"K": K,
+                       "indexes": list(range(dataset_size))})
+
+    elif "opt" in model:
+        miner = OPTMiner(model, device=device)
+        config = copy.deepcopy(honest_opt_mining_config)
         config.update({"K": K,
                        "indexes": list(range(dataset_size))})
 

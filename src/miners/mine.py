@@ -282,6 +282,14 @@ HONEST_BLOOM_MINER = MinerConfig(
     triples=False
 )
 
+HONEST_OPT_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="[MASK]",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
 # RAG
 HONEST_RAG_MINER = MinerConfig(
     template_column="template_masked",
