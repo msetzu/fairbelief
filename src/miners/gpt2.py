@@ -43,7 +43,7 @@ class GPT2Miner(Miner):
         # mine
         for i in config["indexes"]:
             input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], "")[:-1]
-            max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 5
+            max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 1
 
             if self.do_rstrip is True:
                 input_sentence = input_sentence.rstrip()
