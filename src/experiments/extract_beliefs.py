@@ -50,7 +50,7 @@ from miners.rag import RagMiner
 from miners.bloom import BLOOMMiner
 from miners.opt import OPTMiner
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 
 def extract(dataset: str, model: str = "roberta-base", subset: Optional[str] = "trex", dump_file: str = "dump"):
