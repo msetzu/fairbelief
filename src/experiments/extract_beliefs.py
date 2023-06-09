@@ -50,7 +50,7 @@ from miners.rag import RagMiner
 from miners.bloom import BLOOMMiner
 from miners.opt import OPTMiner
 
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
 
 def extract(dataset: str, model: str = "roberta-base", subset: Optional[str] = "trex", dump_file: str = "dump"):
@@ -89,7 +89,7 @@ def extract_lama(model: str = "roberta-base", subset: str = "trex", dump_file: s
 
     K = 100
     config = copy.deepcopy(lama_baert_mining_config)
-    config.update({"K":K,
+    config.update({"K": K,
                    "indexes": list(range(dataset_size))})
 
     if "bert" in model or "bart" in model:
