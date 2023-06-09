@@ -43,7 +43,7 @@ class GPT2Miner(Miner):
         # mine
         for i in config["indexes"]:
             input_sentence = prompts[i][config["template_column"]].replace(config["original_mask"], "")[:-1]
-            max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 1
+            max_length = len(self.tokenizer(input_sentence)["input_ids"]) + 10
 
             if self.do_rstrip is True:
                 input_sentence = input_sentence.rstrip()
@@ -53,7 +53,8 @@ class GPT2Miner(Miner):
             
             predictions = list()
             for p in model_predictions:
-                predictions.append(p["generated_text"][len(input_sentence) + 1:].split(" ")[0].replace(",", "").replace(".", "").replace("!", "").replace("?", ""))
+                # predictions.append(p["generated_text"][len(input_sentence) + 1:].split(" ")[0].replace(",", "").replace(".", "").replace("!", "").replace("?", ""))
+                predictions.append(p["generated_text"][len(input_sentence) + 1:])
 
             mine_results.append((i,
                                  prompts[i]["uuid"] if "uuid" in prompts[i] else "",
