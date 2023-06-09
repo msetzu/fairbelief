@@ -69,7 +69,7 @@ class T5Miner(Miner):
                                  predictions,
                                  prompts[i][config["fillin_value"]]))
 
-            breakpoint()
+            # breakpoint()
 
         return mine_results
 
