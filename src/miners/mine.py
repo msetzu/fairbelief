@@ -315,6 +315,15 @@ HONEST_REALM_MINER = MinerConfig(
     triples=False
 )
 
+#LLAMA
+HONEST_LLAMA_MINER = MinerConfig(
+    template_column="template_masked",
+    mask_template="<mask>",
+    original_mask="[M]",
+    fillin_column="type",
+    triples=False
+)
+
 ## Stereoset
 STEREOSET_BAERT_MINER = MinerConfig(
     template_column="template_masked",
