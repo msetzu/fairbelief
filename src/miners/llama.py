@@ -3,7 +3,7 @@ from typing import List, Tuple
 import torch
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from transformers import pipeline, AutoTokenizer, LlamaForCausalLM
+from transformers import pipeline, AutoTokenizer, LlamaForCausalLM, AutoModelForCausalLM
 
 from miners.mine import Miner, MinerConfig
 
@@ -26,11 +26,15 @@ class LLAMAMiner(Miner):
             self.do_rstrip = True
 
         self.tokenizer = AutoTokenizer.from_pretrained(model)
+
         model_kwargs = {
             "torch_dtype": dtype,
             "device_map": "balanced_low_0"
         }
-        self.pipeline = LlamaForCausalLM.from_pretrained(model)
+        # self.pipeline = LlamaForCausalLM.from_pretrained(model, **model_kwargs)
+        self.model = AutoModelForCausalLM.from_pretrained(model, **model_kwargs)
+        self.pipeline = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0)
+
         self.max_length = 512
         self.device = device
 
@@ -56,17 +60,19 @@ class LLAMAMiner(Miner):
             if self.do_rstrip is True:
                 input_sentence = input_sentence.rstrip()
 
+            # with torch.inference_mode():
+            #     inputs = self.tokenizer(input_sentence, return_tensors="pt")
+            #     model_predictions = self.pipeline.generate(inputs.input_ids, do_sample=True, num_return_sequences=config["K"],
+            #                                                max_length=max_length)
+            #     model_predictions = self.tokenizer.batch_decode(model_predictions, skip_special_tokens=True, clean_up_tokenization_spaces=False)
             with torch.inference_mode():
-                inputs = self.tokenizer(input_sentence, return_tensors="pt")
-                model_predictions = self.pipeline.generate(inputs.input_ids, do_sample=True, num_return_sequences=config["K"],
-                                                           max_length=max_length)
-                model_predictions = self.tokenizer.batch_decode(model_predictions, skip_special_tokens=True, clean_up_tokenization_spaces=False)
-                
-            
+                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"], max_length=max_length)
+
             predictions = list()
             for p in model_predictions:
                 # predictions.append(p["generated_text"][len(input_sentence) + 1:].split(" ")[0].replace(",", "").replace(".", "").replace("!", "").replace("?", ""))
-                predictions.append(p[len(input_sentence) + 1:])
+                # predictions.append(p[len(input_sentence) + 1:])
+                predictions.append(p["generated_text"][len(input_sentence) + 1:])
 
             # breakpoint()
 
