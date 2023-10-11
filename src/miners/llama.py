@@ -33,6 +33,7 @@ class LLAMAMiner(Miner):
         }
         # self.pipeline = LlamaForCausalLM.from_pretrained(model, **model_kwargs)
         self.model = AutoModelForCausalLM.from_pretrained(model, **model_kwargs)
+        self.pipeline = self.model
         # self.pipeline = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0)
 
         self.max_length = 512
