@@ -33,8 +33,8 @@ class LLAMAMiner(Miner):
         }
         # self.pipeline = LlamaForCausalLM.from_pretrained(model, **model_kwargs)
         self.model = AutoModelForCausalLM.from_pretrained(model, **model_kwargs)
-        self.pipeline = self.model
-        # self.pipeline = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0)
+        # self.pipeline = self.model
+        self.pipeline = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0)
 
         self.max_length = 512
         self.device = device
@@ -62,10 +62,10 @@ class LLAMAMiner(Miner):
                 input_sentence = input_sentence.rstrip()
 
             with torch.inference_mode():
-                inputs = self.tokenizer(input_sentence, return_tensors="pt")
-                generations = self.pipeline.generate(inputs.input_ids, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"],  max_length=max_length)
-                model_predictions = self.tokenizer.batch_decode(generations, skip_special_tokens=True, clean_up_tokenization_spaces=False)
-                # model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"], max_length=max_length)
+                # inputs = self.tokenizer(input_sentence, return_tensors="pt")
+                # generations = self.pipeline.generate(inputs.input_ids, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"],  max_length=max_length)
+                # model_predictions = self.tokenizer.batch_decode(generations, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+                model_predictions = self.pipeline(input_sentence, do_sample=False, num_beams=config["K"], num_return_sequences=config["K"], max_length=max_length)
 
             predictions = list()
             for p in model_predictions:
