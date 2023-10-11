@@ -38,4 +38,4 @@ MANIFEST
 *.npy
 
 # Beliefs
-*.jsonl
+# *.jsonl
