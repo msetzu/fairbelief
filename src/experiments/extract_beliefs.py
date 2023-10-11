@@ -249,6 +249,11 @@ def extract_honest(model: str = "roberta-base", subset: str = "trex", dump_file:
 
     elif model.startswith("gpt2"):
             miner = GPT2Miner(model, "gpt2", device=device)
+    else:
+        miner = LLAMAMiner(model, device=device)
+        config = copy.deepcopy(honest_llama_mining_config)
+        config.update({"K": K,
+                       "indexes": list(range(dataset_size))})
 
     predictions = miner.mine(honest_dataset, config)
 
